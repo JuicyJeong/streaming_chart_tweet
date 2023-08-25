@@ -13,7 +13,7 @@ from tweet import generate_tweet_content
 #1. 트위터 api 값 받아오고 초기화.
 def init_twitter_api():
 
-    with open('api_info.json', 'r') as file:
+    with open('api_info_PLAVE.json', 'r') as file:
         json_data = json.load(file)
         
     ############################DO NOT CHANGE##################################
@@ -21,16 +21,19 @@ def init_twitter_api():
     API_SECRET = json_data['API_SECRET']
     ACCESS_KEY = json_data['ACCESS_KEY']
     ACCES_SECRET = json_data['ACCES_SECRET']
+    BEARER_TOKEN = json_data['BEARER_TOKEN']
     ############################DO NOT CHANGE##################################
 
-    # #########################INIT############################
-    auth = tweepy.OAuthHandler(API_KEY,API_SECRET)
-    auth.set_access_token(ACCESS_KEY,ACCES_SECRET)
 
-    api = tweepy.API(auth)
+    # #########################INIT############################
+    # auth = tweepy.OAuthHandler(API_KEY,API_SECRET)
+    # auth.set_access_token(ACCESS_KEY,ACCES_SECRET)
+
+    # api = tweepy.API(auth)
     try:
-        api.verify_credentials()
+        # api.verify_credentials()
         print("Twitter api pass. Ready to tweet!")
+        return API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET, BEARER_TOKEN
     except:
         print("Twitter api fail. call JUICY")
     # # #########################INIT############################
@@ -43,8 +46,8 @@ def get_chart_data():
     # 차트를 불러옵니다
     print('멜론 차트 가져오는중...')
     # melon_chart_realtime = chart_to_df('melon','realtime')
-    melon_chart_daily = chart_to_df('melon','daily')
-    # melon_chart_top100 = chart_to_df('melon','top100')
+    # melon_chart_daily = chart_to_df('melon','daily')
+    melon_chart_top100 = chart_to_df('melon','top100')
     melon_chart_hot100 = chart_to_df('melon','hot100')
     print('성공!')
 
@@ -61,14 +64,14 @@ def get_chart_data():
     # 지니도 top100은 없네...
     print('성공!')
 
-    return melon_chart_daily,melon_chart_hot100,bugs_chart_realtime,bugs_chart_daily,genie_chart_realtime,genie_chart_daily
+    return melon_chart_top100,melon_chart_hot100,bugs_chart_realtime,bugs_chart_daily,genie_chart_realtime,genie_chart_daily
 
 
 
 
 
 
-def get_chart_data_AND_write_content(title_keyword, title_keyword_hashtag, melon_chart_daily,melon_chart_hot100,bugs_chart_realtime,bugs_chart_daily,genie_chart_realtime,genie_chart_daily):
+def get_chart_data_AND_write_content(title_keyword, title_keyword_hashtag, melon_chart_top100,melon_chart_hot100,bugs_chart_realtime,bugs_chart_daily,genie_chart_realtime,genie_chart_daily):
      #시간별로 루프 도는 부분#####################################################################
     now = datetime.now()
     month_raw = now.month
@@ -83,8 +86,8 @@ def get_chart_data_AND_write_content(title_keyword, title_keyword_hashtag, melon
 
     ########################음원사이트, 차트별로 트윗 내용 가져오기#########################
     # melon_data_realtime = generate_tweet_content('melon', 'realtime',melon_chart_realtime, title_keyword1)
+    melon_chart_top100 = generate_tweet_content('melon', 'top100', melon_chart_top100, title_keyword)
     # melon_data_daily = generate_tweet_content('melon', 'daily', melon_chart_daily, title_keyword)
-    melon_data_daily = generate_tweet_content('melon', 'daily', melon_chart_daily, title_keyword)
     melon_data_top100 = generate_tweet_content('melon', 'hot100', melon_chart_hot100, title_keyword)
 
     bugs_data_realtime = generate_tweet_content('bugs', 'realtime',bugs_chart_realtime,title_keyword)
@@ -99,7 +102,7 @@ def get_chart_data_AND_write_content(title_keyword, title_keyword_hashtag, melon
     tweet_title_info = f'#{title_keyword_hashtag} #PLAVE\n '
     tweet_time_info = f'☆{month}/{day}  {hour}:00\n'
     # tweet_content1 = melon_data_realtime
-    tweet_content2 = melon_data_daily
+    tweet_content2 = melon_chart_top100
     tweet_content3 = melon_data_top100
     tweet_content4 = bugs_data_realtime
     tweet_content5 = bugs_data_daily
@@ -131,9 +134,6 @@ def get_chart_data_AND_write_content(title_keyword, title_keyword_hashtag, melon
 
 
 if __name__== '__main__':
-    interval = 120  # 5분을 초로 환산
-    start_hour = 6  # 시작 시간 (6시)
-    end_hour = 23  # 종료 시간 (23시)
 
     artist_keyword = 'PLAVE'
     title_keyword1 = '여섯 번째 여름'
@@ -141,17 +141,21 @@ if __name__== '__main__':
     title_keyword_list_hashtag= ['왜요_왜요_왜?🌿','여섯_번째_여름🌿', 'I_Just_Love_Ya🌿', 'Dear_PLLI🌿']
 
 
-    # init_twitter_api()
+    API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET, BEARER_TOKEN= init_twitter_api()
 
 
-    melon_chart_daily,melon_chart_hot100,bugs_chart_realtime,bugs_chart_daily,genie_chart_realtime,genie_chart_daily = get_chart_data()
-    for i in range(len(title_keyword_list)):
+    # melon_chart_top100,melon_chart_hot100,bugs_chart_realtime,bugs_chart_daily,genie_chart_realtime,genie_chart_daily = get_chart_data()
+    # for i in range(len(title_keyword_list)):
 
-        content =  get_chart_data_AND_write_content(title_keyword_list[i],title_keyword_list_hashtag[i],melon_chart_daily,melon_chart_hot100,bugs_chart_realtime,bugs_chart_daily,genie_chart_realtime,genie_chart_daily)
+    #     content =  get_chart_data_AND_write_content(title_keyword_list[i],title_keyword_list_hashtag[i],melon_chart_top100,melon_chart_hot100,bugs_chart_realtime,bugs_chart_daily,genie_chart_realtime,genie_chart_daily)
 
-        print('################################TWEETPART#################################')
-        print(content)
-        print('################################TWEETPART#################################')
-    
-    #tweet
-    # post_tweet(final_tweet_content,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET)
+    #     print('################################TWEETPART#################################')
+    #     print(content)
+    #     print('################################TWEETPART#################################')
+
+    #     print(f'SYSTEM: {title_keyword_list[i]}의 트윗이 완료 되었습니다. 30초 후에 새로운 트윗을 작성합니다.')
+    #     # post_tweet(content,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET)
+    #     time.sleep(30)
+    #     #tweet
+    content = "TEST TWEET. SEE YOU SOON..."
+    post_tweet(content,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN)

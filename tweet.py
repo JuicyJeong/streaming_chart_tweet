@@ -39,13 +39,22 @@ from bs import serach_by_artist
 # hour = f'{hour_raw:02d}'
 
 
-def post_tweet(contents,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET):
-    auth = tweepy.OAuthHandler(API_KEY,API_SECRET)
-    auth.set_access_token(ACCESS_KEY,ACCES_SECRET)
-    api = tweepy.API(auth)
+def post_tweet(contents,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN):
+    ######################VER1#####################
+    # auth = tweepy.OAuthHandler(API_KEY,API_SECRET)
+    # auth.set_access_token(ACCESS_KEY,ACCES_SECRET)
+    # api = tweepy.API(auth)
     
-    api.update_status(contents)
+    # api.update_status(contents)
+    ######################VER1#####################
 
+    client = tweepy.Client(bearer_token=BEARER_TOKEN
+                           , consumer_key=API_KEY
+                           , consumer_secret=API_SECRET
+                           , access_token=ACCESS_KEY
+                           , access_token_secret=ACCES_SECRET)
+    
+    client.create_tweet(text=contents)
 
 
 #사이트와 노래 제목을 입력하면, 그 사이트에서의 노래의 순위값들을 반환합니다. 반환 값은 그 노래에 대한 정보 트윗 값.
@@ -58,9 +67,9 @@ def generate_tweet_content(site_name, chart_category, site_chart, title_keyword)
         elif chart_category == 'daily':
             site_line = '💚멜론일간차트'
         elif chart_category == 'top100':
-            site_line = '💚멜론top100'
+            site_line = '💚멜론TOP100'
         elif chart_category == 'hot100':
-            site_line = '💚멜론hot100(100일)'
+            site_line = '💚멜론HOT100'
 
     elif site_name =='bugs':
         if chart_category == 'realtime':
@@ -110,4 +119,4 @@ if __name__== '__main__':
 	#########################test part#########################
 
 	# tweet
-	post_tweet(final_tweet_content)
+	# post_tweet(final_tweet_content)
