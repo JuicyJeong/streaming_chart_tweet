@@ -39,12 +39,19 @@ from bs import serach_by_artist
 # hour = f'{hour_raw:02d}'
 
 
-def post_tweet(contents,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET):
-    auth = tweepy.OAuthHandler(API_KEY,API_SECRET)
-    auth.set_access_token(ACCESS_KEY,ACCES_SECRET)
-    api = tweepy.API(auth)
+def post_tweet(contents,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN):
+    #auth = tweepy.OAuthHandler(API_KEY,API_SECRET)
+    #auth.set_access_token(ACCESS_KEY,ACCES_SECRET)
+    #api = tweepy.API(auth)
     
-    api.update_status(contents)
+    #api.update_status(contents)
+    client = tweepy.Client(bearer_token=BEARER_TOKEN
+                           , consumer_key=API_KEY
+                           , consumer_secret=API_SECRET
+                           , access_token=ACCESS_KEY
+                           , access_token_secret=ACCES_SECRET)
+    
+    client.create_tweet(text=contents)
 
 
 
@@ -58,9 +65,9 @@ def generate_tweet_content(site_name, chart_category, site_chart, title_keyword)
         elif chart_category == 'daily':
             site_line = '💚멜론일간차트'
         elif chart_category == 'top100':
-            site_line = '💚멜론top100'
+            site_line = '💚멜론TOP100'
         elif chart_category == 'hot100':
-            site_line = '💚멜론hot100(100일)'
+            site_line = '💚멜론HOT100'
 
     elif site_name =='bugs':
         if chart_category == 'realtime':

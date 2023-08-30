@@ -27,7 +27,7 @@ def chart_to_df(striming_list,category):
     hour_raw = now.hour
     month = f'{month_raw:02d}'
     day = f'{day_raw:02d}'
-    yesterday = f'{day_raw-1:02d}'
+    yesterday = f'{day_raw-2:02d}'
     hour = f'{hour_raw:02d}'
     # print(year,month,day,hour)
 
