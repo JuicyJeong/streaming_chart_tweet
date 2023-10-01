@@ -14,14 +14,15 @@ from tweet import generate_tweet_content
 #1. 트위터 api 값 받아오고 초기화.
 def init_twitter_api():
 
-    with open('/home/juicy/proj/streaming_chart_tweet/api_info_PLAVE.json', 'r') as file:
+    # with open('/home/juicy/proj/streaming_chart_tweet/api_info.json', 'r') as file:
+    #     json_data = json.load(file)
+    with open('api_info_JUICY.json', 'r') as file:
         json_data = json.load(file)
-        
     ############################DO NOT CHANGE##################################
     API_KEY = json_data['API_KEY']
     API_SECRET = json_data['API_SECRET']
     ACCESS_KEY = json_data['ACCESS_KEY']
-    ACCES_SECRET = json_data['ACCES_SECRET']
+    ACCES_SECRET = json_data['ACCESS_SECRET']
     BEARER_TOKEN = json_data['BEARER_TOKEN']
     ############################DO NOT CHANGE##################################
 
@@ -63,12 +64,13 @@ def get_chart_data():
     # 지니도 top100은 없네...
     print('성공!')
 
+    #리턴값으로 갖고오고 싶은 차트들을 설정하기.
     return melon_chart_top100,melon_chart_hot100,bugs_chart_realtime,genie_chart_realtime
 
 
 
 
-
+# 여기에서도 들고올 차트들을 정합성이 맞게 입력값을 설정하기.
 def get_chart_data_AND_write_content(title_keyword, title_keyword_hashtag, melon_chart_top100,melon_chart_hot100,bugs_chart_realtime,genie_chart_realtime):
      #시간별로 루프 도는 부분#####################################################################
     now = datetime.now()
@@ -97,7 +99,7 @@ def get_chart_data_AND_write_content(title_keyword, title_keyword_hashtag, melon
 
 
     ###########################트윗 내용 작성하는 구간. 맨 위의 타이틀은 직접 작성해주세요!#########################
-    tweet_title_info = f'#{title_keyword_hashtag} #PLAVE\n '
+    tweet_title_info = f'#{title_keyword_hashtag} #이세계아이돌\n ' #여기에 아티스트 해시태그를 입력.
     tweet_time_info = f'☆{month}/{day}  {hour}:00\n'
     # tweet_content1 = melon_data_realtime
     tweet_content2 = melon_data_top100
@@ -133,16 +135,18 @@ def get_chart_data_AND_write_content(title_keyword, title_keyword_hashtag, melon
 
 if __name__== '__main__':
     
-    title_keyword_list = ['여섯 번째 여름']
-    title_keyword_list_hashtag= ['여섯_번째_여름🌿']
+    title_keyword_list = ['KIDDING'] # 여기에 곡명을 입력. 두개를 쓸 거면 쉼표로 작성.
+    title_keyword_list_hashtag= ['KIDDING'] # 여기에 곡명 해시태그를 입력
 
 
-    API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN = init_twitter_api()
+    # API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN = init_twitter_api()
 
     melon_chart_top100,melon_chart_hot100,bugs_chart_realtime,genie_chart_realtime = get_chart_data()
-    for i in range(len(title_keyword_list)):
+    for i in range(len(title_keyword_list)): #여러트윗을 하기 위해 반복 돌리는 구문
 
+        # content =  "TEST TWEET."
         content =  get_chart_data_AND_write_content(title_keyword_list[i],title_keyword_list_hashtag[i],melon_chart_top100,melon_chart_hot100,bugs_chart_realtime,genie_chart_realtime)
+        
 
         print('################################TWEETPART#################################')
         print(content)
@@ -150,7 +154,7 @@ if __name__== '__main__':
         print(f'SYSTEM: {title_keyword_list[i]}의 트윗이 완료 되었습니다. 30초 후에 새로운 트윗을 작성합니다.')
  
     	#tweetpart. 마지막까지 확인 또 확인. 마지막에 주석 풀기
-        post_tweet(content,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN)
+        # post_tweet(content,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN)
         random_sec = random.randint(15, 40)
 
         time.sleep(random_sec)

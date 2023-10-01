@@ -55,16 +55,17 @@ def chart_to_df(striming_list,category):
     
     
 
-    for i in range(1,101):
+    for i in range(1,101): 
         chart_to_dict = {}
 
         song_rank = i # 곡 순위 
-        song_artist_raw = soup.select(f"#chart-table-content > tbody > tr:nth-child({song_rank}) > td.subject > p:nth-child(2)") #태그 까지 들고옵니다 
-        song_title_raw = soup.select(f"#chart-table-content > tbody > tr:nth-child({song_rank}) > td.subject > p:nth-child(1)")
+        # 첫번째 i가 랭크 정보가 아니라... 이상한 라인이라서 2번째부터 101번째까지 긁어옵니다. 10.01
+        song_artist_raw = soup.select(f"#chart-table-content > tbody > tr:nth-child({song_rank+1}) > td.subject > p:nth-child(2)") #태그 까지 들고옵니다 
+        song_title_raw = soup.select(f"#chart-table-content > tbody > tr:nth-child({song_rank+1}) > td.subject > p:nth-child(1)")
         # print(f"{song_rank}'위:{song_title_raw}")
         song_artist = song_artist_raw[0].text # 태그를 텍스트값만 깔끔하게 갖고 옵니다.
         song_title = song_title_raw[0].text
-        song_ranking_updown = soup.select(f"#chart-table-content > tbody > tr:nth-child({song_rank}) > td.ranking > p.change > span") # 태그에 업,다운이 있고 값이 있어서 따로 밑의 조건문에서 처리.
+        song_ranking_updown = soup.select(f"#chart-table-content > tbody > tr:nth-child({song_rank+1}) > td.ranking > p.change > span") # 태그에 업,다운이 있고 값이 있어서 따로 밑의 조건문에서 처리.
 
         # 순위 변동이 있을시, 그 값을 따로 저장합니다.
         #이 값들은 반복 돌때마다 초기화 해야함
@@ -126,26 +127,30 @@ if __name__== '__main__':
     실시간 차트에 올라온 텍스트 그대로 입력해야 검색이 됩니다.'''
     artist_keyword = '무지개'
     title_keyword = '무지개'
+
     ##########################################################################
     #############################키워드를 입력해주세요##############################
     ##########################################################################
 
     
-    bugs_chart = chart_to_df('bugs')
-    melon_chart = chart_to_df('melon')
-    genie_chart = chart_to_df('genie')
+    # bugs_chart = chart_to_df('bugs')
+    # melon_chart = chart_to_df('melon','top100')
+    # genie_chart = chart_to_df('genie')
 
     # bugs_chart.to_csv(f'chart/벅스 차트{year}{month}{day}_{hour}.csv', encoding='utf-8')
-    # melon_chart.to_csv(f'chart/멜론 차트{year}{month}{day}_{hour}.csv', encoding='utf-8')
+    # melon_chart.to_csv(f'멜론 차트_{year}{month}{day}_{hour}.csv', encoding='utf-8')
     # genie_chart.to_csv(f'chart/지니 차트{year}{month}{day}_{hour}.csv', encoding='utf-8')
     
     # 벅스 차트
-    bugs_search_title = search_by_title(bugs_chart,title_keyword)
+    # bugs_search_title = search_by_title(bugs_chart,title_keyword)
     #bugs_search_artist = serach_by_artist(bugs_chart,title_keyword)
+
     # 멜론 차트
-    melon_search_title = search_by_title(melon_chart,title_keyword)
+    # melon_search_title = search_by_title(melon_chart,title_keyword)
+
+
     #melon_search_artist = serach_by_artist(melon_chart,title_keyword)
     # 지니 차트
-    genie_search_title = search_by_title(genie_chart,title_keyword)
+    # genie_search_title = search_by_title(genie_chart,title_keyword)
     #genie_search_title = serach_by_artist(genie_chart,title_keyword)
 
