@@ -17,7 +17,32 @@ month = f'{month_raw:02d}'
 day = f'{day_raw:02d}'
 hour = f'{hour_raw:02d}'
 #print(year,month,day,hour)
+''' 
+2024.08 사이트 url 카테고리 업데이트
+* 기본적인 url 구성
+    가이섬.com/chart/{음원사이트이름}/{차트_카테고리이름}/{날짜}/{시간}
+    이 포맷에 맞지 않는 url도 존재하지만 그건 제외하기로 함
 
+날짜, 시간은 현재 시간기준으로 입력됨.
+* 멜론 {melon} 차트 카테고리
+    TOP100: top100
+    HOT100(100일): hot100-d100
+    최신차트(1주): newest-w1
+    최신차트(4주): newest-w4
+    실시간 차트: realtime
+    
+
+* 지니 {genie} 차트 카테고리
+    실시간 차트: realtime
+    
+* 벅스 {bugs} 차트 카테고리
+    실시간 차트: realtime
+
+* 유튜브 {youtube} 차트 카테고리
+    주간 인기곡 차트: track-weekly
+    주간 인기 뮤직비디오 차트: video-weekly
+
+'''
 
 def chart_to_df(striming_list,category):
 
@@ -38,14 +63,15 @@ def chart_to_df(striming_list,category):
     result_df = pd.DataFrame()
     #일간차트의 경우, 오늘 날짜에 대해서는 업데이트가 진행되지 않았기 때문에, 하루 전것의 데이터를 가져와야함. url형식도 다르니 따로 선업합니다.
     if category =='daily':
-        url = base_path+striming_list+'/chart/'+category+'/'+str(year) + str(month) + str(yesterday)
+        url = base_path+'chart/'+striming_list+'/'+category+'/'+str(year) + str(month) + str(yesterday)
     elif category =='hot100':
-        url = base_path+striming_list+'/chart/'+category+'/d100/'+str(year) + str(month) + str(day)+ "/" + str(hour)
+        url = base_path+'chart/'+striming_list+'/'+category+'/d100/'+str(year) + str(month) + str(day)+ "/" + str(hour)
     else:
-        url = base_path+striming_list+'/chart/'+category+'/'+str(year) + str(month) + str(day)+ "/" + str(hour)
+        url = base_path+'chart/'+striming_list+'/'+category+'/'+str(year) + str(month) + str(day)+ "/" + str(hour)
     # print(url)
     #url = 'https://xn--o39an51b2re.com/melon/chart/realtime/20230608/13'
     # 웹 페이지에 접속하여 HTML 가져오기
+    print(url)
 
     response = requests.get(url)
     html = response.text
@@ -62,7 +88,7 @@ def chart_to_df(striming_list,category):
         # 첫번째 i가 랭크 정보가 아니라... 이상한 라인이라서 2번째부터 101번째까지 긁어옵니다. 10.01
         song_artist_raw = soup.select(f"#chart-table-content > tbody > tr:nth-child({song_rank+1}) > td.subject > p:nth-child(2)") #태그 까지 들고옵니다 
         song_title_raw = soup.select(f"#chart-table-content > tbody > tr:nth-child({song_rank+1}) > td.subject > p:nth-child(1)")
-        # print(f"{song_rank}'위:{song_title_raw}")
+        print(f"{song_rank}'위:{song_title_raw}")
         song_artist = song_artist_raw[0].text # 태그를 텍스트값만 깔끔하게 갖고 옵니다.
         song_title = song_title_raw[0].text
         song_ranking_updown = soup.select(f"#chart-table-content > tbody > tr:nth-child({song_rank+1}) > td.ranking > p.change > span") # 태그에 업,다운이 있고 값이 있어서 따로 밑의 조건문에서 처리.
@@ -134,11 +160,11 @@ if __name__== '__main__':
 
     
     # bugs_chart = chart_to_df('bugs')
-    # melon_chart = chart_to_df('melon','top100')
+    melon_chart = chart_to_df('melon','top100')
     # genie_chart = chart_to_df('genie')
 
     # bugs_chart.to_csv(f'chart/벅스 차트{year}{month}{day}_{hour}.csv', encoding='utf-8')
-    # melon_chart.to_csv(f'멜론 차트_{year}{month}{day}_{hour}.csv', encoding='utf-8')
+    melon_chart.to_csv(f'멜론 차트_{year}{month}{day}_{hour}.csv', encoding='utf-8')
     # genie_chart.to_csv(f'chart/지니 차트{year}{month}{day}_{hour}.csv', encoding='utf-8')
     
     # 벅스 차트
