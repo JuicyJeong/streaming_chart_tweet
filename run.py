@@ -73,14 +73,12 @@ def get_chart_data_AND_write_content(title_keyword, title_keyword_hashtag, chart
     content_tweet = ""
     for i in range(len(chart_list)):
         current_chart = chart_list[i]
-        print(current_chart[0])
-        print(current_chart[1])
-        print(current_chart[2])
+
         tweet = generate_tweet_content(current_chart[0],current_chart[1],current_chart[2],title_keyword)
-        print(tweet)
+        
         content_tweet = content_tweet + tweet
 
-    print(content_tweet)
+    # print(content_tweet)
 
     ###########################트윗 내용 작성하는 구간. 맨 위의 타이틀은 직접 작성해주세요!#########################
     tweet_title_info = f'#{title_keyword_hashtag} #AESPA\n ' #여기에 아티스트 해시태그를 입력.
