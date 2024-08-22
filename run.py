@@ -124,13 +124,16 @@ if __name__== '__main__':
         최신차트(1주): newest-w1
         최신차트(4주): newest-w4
         실시간 차트: realtime
+        일간 차트: daily
         
 
     * 지니 {genie} 차트 카테고리
         실시간 차트: realtime
+        일간 차트: daily
         
     * 벅스 {bugs} 차트 카테고리
         실시간 차트: realtime
+        일간 차트: daily
 
     * 유튜브 {youtube} 차트 카테고리
         주간 인기곡 차트: track-weekly
@@ -138,8 +141,9 @@ if __name__== '__main__':
 
     '''
 
-    title_keyword_list = ['Supernova'] # 여기에 곡명을 입력. 두개를 쓸 거면 쉼표로 작성.
-    title_keyword_list_hashtag= ['Supernova'] # 여기에 곡명 해시태그를 입력
+    title_keyword_list = ['Pump Up The Volume!'] # 여기에 곡명을 입력. 두개를 쓸 거면 쉼표로 작성.
+    title_keyword_list_hashtag= ['Pump Up The Volume!'] # 여기에 곡명 해시태그를 입력
+    artist_keyword = "PLAVE"
 
 
     # API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN = init_twitter_api()
@@ -147,8 +151,11 @@ if __name__== '__main__':
     
     # 받아올 차트들을 리스트로 정리합니다.
     total_list =[]
-    content_list = get_chart_data('melon','top100') # 리스트임
-    total_list.append(content_list)
+    content_0 = get_chart_data('melon','top100') # 리스트임
+    content_1 = get_chart_data('bugs', 'daily')
+
+    total_list.append(content_0)
+    total_list.append(content_1)
 
 
     for i in range(len(title_keyword_list)): #여러트윗을 하기 위해 반복 돌리는 구문

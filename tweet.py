@@ -57,6 +57,8 @@ def post_tweet(contents,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN)
 
 #사이트와 노래 제목을 입력하면, 그 사이트에서의 노래의 순위값들을 반환합니다. 반환 값은 그 노래에 대한 정보 트윗 값.
 def generate_tweet_content(site_name, chart_category, site_chart, title_keyword):
+    # 여기를 파일로 정리할 수 있나...?
+
     
     site_line = '' #초기화 한번 해줘야지 에러가 안남.
     if site_name == 'melon':

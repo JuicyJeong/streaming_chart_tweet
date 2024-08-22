@@ -64,8 +64,6 @@ def chart_to_df(striming_list,category):
     #일간차트의 경우, 오늘 날짜에 대해서는 업데이트가 진행되지 않았기 때문에, 하루 전것의 데이터를 가져와야함. url형식도 다르니 따로 선업합니다.
     if category =='daily':
         url = base_path+'chart/'+striming_list+'/'+category+'/'+str(year) + str(month) + str(yesterday)
-    elif category =='hot100':
-        url = base_path+'chart/'+striming_list+'/'+category+'/d100/'+str(year) + str(month) + str(day)+ "/" + str(hour)
     else:
         url = base_path+'chart/'+striming_list+'/'+category+'/'+str(year) + str(month) + str(day)+ "/" + str(hour)
     # print(url)
