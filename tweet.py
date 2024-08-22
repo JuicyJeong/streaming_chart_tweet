@@ -59,17 +59,22 @@ def post_tweet(contents,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN)
 def generate_tweet_content(site_name, chart_category, site_chart, title_keyword):
     # 여기를 파일로 정리할 수 있나...?
 
-    
+
     site_line = '' #초기화 한번 해줘야지 에러가 안남.
     if site_name == 'melon':
-        if chart_category == 'realtime':
+        if chart_category == 'top100':
+            site_line = '💚멜론TOP100'
+        elif chart_category == 'hot100-d100':
+            site_line = '💚멜론HOT100(100일)'
+        elif chart_category == 'newest-w1':
+            site_line = '💚멜론최신차트(1주)'
+        elif chart_category == 'newest-w4':
+            site_line = '💚멜론최신차트(4주)'
+        elif chart_category == 'realtime':
             site_line = '💚멜론실시간차트'
         elif chart_category == 'daily':
             site_line = '💚멜론일간차트'
-        elif chart_category == 'top100':
-            site_line = '💚멜론TOP100'
-        elif chart_category == 'hot100':
-            site_line = '💚멜론HOT100'
+
 
     elif site_name =='bugs':
         if chart_category == 'realtime':
@@ -83,6 +88,11 @@ def generate_tweet_content(site_name, chart_category, site_chart, title_keyword)
         elif chart_category == 'daily':
             site_line = '💙지니일간차트'
 
+    # elif site_name == 'youtube':
+    #     if chart_category == 'track-weekly':
+    #         site_line = '❤️유튜브주간인기곡'
+    #     if chart_category == 'video-weekly':
+    #         site_line = '❤️유튜브주간인기뮤직비디오'
         
     title_rank_result = search_by_title(site_chart, title_keyword)
     

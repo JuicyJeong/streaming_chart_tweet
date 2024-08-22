@@ -30,12 +30,12 @@ def init_twitter_api():
     ############################DO NOT CHANGE##################################
 
     # #########################INIT############################
-    #auth = tweepy.OAuthHandler(API_KEY,API_SECRET)
-    #auth.set_access_token(ACCESS_KEY,ACCES_SECRET)
+    auth = tweepy.OAuthHandler(API_KEY,API_SECRET)
+    auth.set_access_token(ACCESS_KEY,ACCES_SECRET)
 
-    #api = tweepy.API(auth)
+    api = tweepy.API(auth)
     try:
-        #api.verify_credentials()
+        api.verify_credentials()
         print("Twitter api pass. Ready to tweet!")
         return API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN
 
@@ -81,7 +81,7 @@ def get_chart_data_AND_write_content(title_keyword, title_keyword_hashtag, chart
     # print(content_tweet)
 
     ###########################트윗 내용 작성하는 구간. 맨 위의 타이틀은 직접 작성해주세요!#########################
-    tweet_title_info = f'#{title_keyword_hashtag} #AESPA\n ' #여기에 아티스트 해시태그를 입력.
+    tweet_title_info = f'#{title_keyword_hashtag} #{artist_keyword}\n ' #여기에 아티스트 해시태그를 입력.
     tweet_time_info = f'☆{month}/{day}  {hour}:00\n'
     
 
@@ -140,7 +140,7 @@ if __name__== '__main__':
         주간 인기 뮤직비디오 차트: video-weekly
 
     '''
-
+    # 여기에 작성할 곡명을 입력해주세요! #
     title_keyword_list = ['Pump Up The Volume!'] # 여기에 곡명을 입력. 두개를 쓸 거면 쉼표로 작성.
     title_keyword_list_hashtag= ['Pump Up The Volume!'] # 여기에 곡명 해시태그를 입력
     artist_keyword = "PLAVE"
@@ -153,10 +153,14 @@ if __name__== '__main__':
     total_list =[]
     content_0 = get_chart_data('melon','top100') # 리스트임
     content_1 = get_chart_data('bugs', 'daily')
+    content_2 = get_chart_data('genie','realtime')
+    # content_3 = get_chart_data('youtube','track-weekly' ) 유튜브는 위크 기준으로 새로 입력해야함...
+    # 귀찮으니 일단 보류. 
 
     total_list.append(content_0)
     total_list.append(content_1)
-
+    total_list.append(content_2)
+    
 
     for i in range(len(title_keyword_list)): #여러트윗을 하기 위해 반복 돌리는 구문
 
