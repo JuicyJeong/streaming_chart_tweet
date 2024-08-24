@@ -57,15 +57,30 @@ def chart_to_df(striming_list,category):
     hour = f'{hour_raw:02d}'
     # print(year,month,day,hour)
 
+
+    # 현재 날짜 가져오기
+    today = datetime.today()
+
+    # 현재 날짜의 연도, 주 번호, 요일 반환
+    year, week_number, weekday = today.isocalendar()
+
     base_path = 'https://xn--o39an51b2re.com/'
 
 
     result_df = pd.DataFrame()
+
+    
+
     #일간차트의 경우, 오늘 날짜에 대해서는 업데이트가 진행되지 않았기 때문에, 하루 전것의 데이터를 가져와야함. url형식도 다르니 따로 선업합니다.
     if category =='daily':
         url = base_path+'chart/'+striming_list+'/'+category+'/'+str(year) + str(month) + str(yesterday)
+    
     else:
         url = base_path+'chart/'+striming_list+'/'+category+'/'+str(year) + str(month) + str(day)+ "/" + str(hour)
+    
+    if striming_list =='youtube':
+        url = base_path+'chart/'+striming_list+'/'+category+'/'+str(year)+'/'+str(week_number-1)
+
     # print(url)
     #url = 'https://xn--o39an51b2re.com/melon/chart/realtime/20230608/13'
     # 웹 페이지에 접속하여 HTML 가져오기

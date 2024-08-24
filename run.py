@@ -70,6 +70,9 @@ def get_chart_data_AND_write_content(title_keyword, title_keyword_hashtag, chart
     day = f'{day_raw:02d}'
     hour = f'{hour_raw:02d}'
     
+
+
+
     content_tweet = ""
     for i in range(len(chart_list)):
         current_chart = chart_list[i]
@@ -154,13 +157,14 @@ if __name__== '__main__':
     content_0 = get_chart_data('melon','top100') # 리스트임
     content_1 = get_chart_data('bugs', 'daily')
     content_2 = get_chart_data('genie','realtime')
-    # content_3 = get_chart_data('youtube','track-weekly' ) 유튜브는 위크 기준으로 새로 입력해야함...
+    content_3 = get_chart_data('youtube','track-weekly' ) #유튜브는 위크 기준으로 새로 입력해야함...
     # 귀찮으니 일단 보류. 
 
     total_list.append(content_0)
     total_list.append(content_1)
     total_list.append(content_2)
-    
+    total_list.append(content_3)
+
 
     for i in range(len(title_keyword_list)): #여러트윗을 하기 위해 반복 돌리는 구문
 

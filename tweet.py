@@ -88,11 +88,11 @@ def generate_tweet_content(site_name, chart_category, site_chart, title_keyword)
         elif chart_category == 'daily':
             site_line = '💙지니일간차트'
 
-    # elif site_name == 'youtube':
-    #     if chart_category == 'track-weekly':
-    #         site_line = '❤️유튜브주간인기곡'
-    #     if chart_category == 'video-weekly':
-    #         site_line = '❤️유튜브주간인기뮤직비디오'
+    elif site_name == 'youtube':
+        if chart_category == 'track-weekly':
+            site_line = '❤️유튜브주간인기곡'
+        if chart_category == 'video-weekly':
+            site_line = '❤️유튜브주간인기뮤직비디오'
         
     title_rank_result = search_by_title(site_chart, title_keyword)
     
@@ -118,7 +118,7 @@ def generate_tweet_content(site_name, chart_category, site_chart, title_keyword)
     return tweet_rank_only
 if __name__== '__main__':
     #############################검색어를 입력해주세요##############################
-	artist_keyword = '임영웅'
-	title_keyword1 = '무지개'
+	artist_keyword = '아티스트'
+	title_keyword1 = '키워드'
     #############################검색어를 입력해주세요##############################
 
