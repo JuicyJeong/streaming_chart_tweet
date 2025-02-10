@@ -13,7 +13,6 @@ from tweet import generate_tweet_content
 
 
 
-
 #1. 트위터 api 값 받아오고 초기화.
 def init_twitter_api():
 
@@ -143,13 +142,13 @@ if __name__== '__main__':
         주간 인기 뮤직비디오 차트: video-weekly
 
     '''
-    # 여기에 작성할 곡명을 입력해주세요! #
+    
     title_keyword_list = ['Pump Up The Volume!'] # 여기에 곡명을 입력. 두개를 쓸 거면 쉼표로 작성.
     title_keyword_list_hashtag= ['Pump Up The Volume!'] # 여기에 곡명 해시태그를 입력
     artist_keyword = "PLAVE"
 
 
-    # API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN = init_twitter_api()
+    API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN = init_twitter_api()
 
     
     # 받아올 차트들을 리스트로 정리합니다.
@@ -177,11 +176,11 @@ if __name__== '__main__':
         print('################################TWEETPART#################################')
         print(f'SYSTEM: {title_keyword_list[i]}의 트윗이 완료 되었습니다. 30초 후에 새로운 트윗을 작성합니다.')
  
-    # 	#tweetpart. 마지막까지 확인 또 확인. 마지막에 주석 풀기
-    #     # post_tweet(content,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN)
-    #     random_sec = random.randint(15, 40)
+    	#tweetpart. 마지막까지 확인 또 확인. 마지막에 주석 풀기
+        # post_tweet(content,API_KEY,API_SECRET,ACCESS_KEY,ACCES_SECRET,BEARER_TOKEN)
+        # random_sec = random.randint(15, 40)
 
-    #     time.sleep(random_sec)
+        # time.sleep(random_sec)
 
 
 
