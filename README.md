@@ -38,7 +38,8 @@ pip install tweepy
 ### 파이썬 스크립트 실행
 run.py 파일 내의 변수에 키워드 입력
 ![keyword_example](asset/keyword_example.png)
+
+파일 실행
 ```bash
 python run.py
 ```
-## HELLO WORLD!
